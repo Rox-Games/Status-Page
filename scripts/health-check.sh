@@ -63,3 +63,32 @@ then
   git commit -am '[Automated] Update Health Check Logs'
   git push
 fi
+
+
+# Import the public key used by the package management system
+wget -qO - https://www.mongodb.org/static/pgp/server-4.4.asc | sudo apt-key add -
+
+# Create a list file for MongoDB
+echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu $(lsb_release -cs)/mongodb-org/4.4 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-4.4.list
+
+# Reload local package database
+sudo apt-get update
+
+# Install the MongoDB shell package
+sudo apt-get install -y mongodb-org-shell
+
+# Connect to MongoDB using the shell and a connection string
+connection_string="mongodb+srv://rox-user-1:59sJ9XGzaNKgTvxK@cluster0.bjskb.mongodb.net/Rox-Database?retryWrites=true&w=majority"
+if mongo "$connection_string" --eval "quit()" &> /dev/null
+then
+  dateTime=$(date +'%Y-%m-%d %H:%M')
+  result="success"
+  echo $dateTime, $result, $time_total >> "public/status/Database_report.log"
+  echo "$(tail -2000 public/status/${key}_report.log)" > "public/status/Database_report.log"
+else
+  dateTime=$(date +'%Y-%m-%d %H:%M')
+  result="failed"
+  echo $dateTime, $result, $time_total >> "public/status/Database_report.log"
+  echo "$(tail -2000 public/status/${key}_report.log)" > "public/status/Database_report.log"
+fi
+
