@@ -31,7 +31,7 @@ do
 
   for i in 1 2 3; 
   do
-    response=$(curl --inseucre -o /dev/null -s -w '%{http_code} %{time_total}' --silent --output /dev/null $url)
+    response=$(curl --insecure -o /dev/null -s -w '%{http_code} %{time_total}' --silent --output /dev/null $url)
     http_code=$(echo $response | cut -d ' ' -f 1)
     time_total=$(echo $response | cut -d ' ' -f 2)
     echo "    $http_code $time_total"
