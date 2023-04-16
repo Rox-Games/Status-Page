@@ -1,6 +1,6 @@
-# Fettle 💟 
+# ROX Status Page 💟 
 
-**Fettle** is the open-source status page, powered entirely by GitHub Actions, Issues, and Pages.
+Powered entirely by GitHub Actions, Issues, and Pages.
 
 <img src="./public/ss.png" />
 
@@ -8,7 +8,7 @@
 # How it works
 
 - Hosting
-    - GitHub Pages is used for hosting the status page.
+    - Netlify is used for hosting the status page. https://status.rox.games/
 
 - Monitoring
     - Github Workflow will be triggered every 1 Hr (Configurable) to visit the website.
@@ -17,5 +17,3 @@
 - Incidents
     - Github issue is used for incident management.
 
-# Contributing
-Feel free to submit pull requests and/or file issues for bugs and suggestions.
