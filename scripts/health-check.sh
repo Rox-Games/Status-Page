@@ -76,7 +76,7 @@ echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu focal/mongodb
 sudo apt-get update
 
 # Install the MongoDB shell package
-sudo apt-get install -y mongodb-mongosh
+sudo apt-get install -y mongodb-mongosh --no-startup-hooks
 
 # Connect to MongoDB using the shell and a connection string
 connection_string="mongodb+srv://rox-user-1:59sJ9XGzaNKgTvxK@cluster0.bjskb.mongodb.net/Rox-Database?retryWrites=true&w=majority"
