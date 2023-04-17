@@ -3,14 +3,22 @@ name: Scheduled Health Check
 # Controls when the action will run.
 on:
   schedule:
-    - cron: "*/5 * * * *"
+    - cron: "*/6 * * * *"
 
 jobs:
   health_check_job:
     runs-on: ubuntu-latest
     name: Check all sites
     steps:
-      - uses: actions/checkout@v2
+      - name: checkout code
+        uses: actions/checkout@v2
+      
+      - name: Install dependencies
+        run: npm install mongodb
+        
+      - name: Connect to MongoDB
+        run: node ./scripts/mongo-db.js
+        
       - name: Run Shell Script
         id: shell_script_run
         run: bash ./scripts/health-check.sh
