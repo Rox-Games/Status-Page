@@ -13,7 +13,7 @@ async function main() {
         await client.connect();
         const end = Date.now();
         const diff = (end - start) / 1000;
-        const status = `${new Date().toISOString()}, success , ${diff.toFixed(4)}`;
+        const status = `${new Date().toISOString()}, success, ${diff.toFixed(4)}`;
         require('fs').appendFileSync('public/status/Database_report.log', `${status}\n`);
         console.log("Database is up")
 
@@ -22,7 +22,7 @@ async function main() {
         console.error(e);
         const end = Date.now();
         const diff = (end - start) / 1000;
-        const status = `${new Date().toISOString()}, failure , ${diff.toFixed(4)}`;
+        const status = `${new Date().toISOString()}, failure, ${diff.toFixed(4)}`;
         require('fs').appendFileSync('public/status/Database_report.log', `${status}\n`);
     } finally {
         await client.close();
@@ -50,7 +50,7 @@ const RoxRequest = https.request({
 }, res => {
     const end = Date.now();
     const diff = (end - start) / 1000;
-    const status = `${new Date().toISOString()}, success , ${diff.toFixed(4)}`;
+    const status = `${new Date().toISOString()}, success, ${diff.toFixed(4)}`;
     console.log('Home Page is up');
     fs.appendFileSync('public/status/Rox_report.log', `${status}\n`);
 });
@@ -58,7 +58,7 @@ const RoxRequest = https.request({
 RoxRequest.on('error', error => {
     const end = Date.now();
     const diff = (end - start) / 1000;
-    const status = `${new Date().toISOString()}, failure , ${diff.toFixed(4)}`;
+    const status = `${new Date().toISOString()}, failure, ${diff.toFixed(4)}`;
     console.log('Home Page is down');
     fs.appendFileSync('public/status/Rox_report.log', `${status}\n`);
 
@@ -79,7 +79,7 @@ clusterReq = https.request({
 }, res => {
     const end = Date.now();
     const diff = (end - start) / 1000;
-    const status = `${new Date().toISOString()}, success , ${diff.toFixed(4)}`;
+    const status = `${new Date().toISOString()}, success, ${diff.toFixed(4)}`;
     console.log('Cluster is up');
     fs.appendFileSync('public/status/Cluster_report.log', `${status}\n`);
 });
@@ -87,7 +87,7 @@ clusterReq = https.request({
 clusterReq.on('error', error => {
     const end = Date.now();
     const diff = (end - start) / 1000;
-    const status = `${new Date().toISOString()}, failure , ${diff.toFixed(4)}`;
+    const status = `${new Date().toISOString()}, failure, ${diff.toFixed(4)}`;
     console.log('Cluster is down', error);
     fs.appendFileSync('public/status/Cluster_report.log', `${status}\n`);
 
