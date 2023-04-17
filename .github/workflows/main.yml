@@ -1,0 +1,55 @@
+name: MongoDB Connection Pipeline
+on: [push]
+
+jobs:
+  connect:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      
+      - name: Install dependencies
+        run: npm install mongodb
+      
+      - name: Connect to MongoDB
+        run: |
+          const { MongoClient } = require('mongodb');
+          const uri = 'mongodb+srv://<username>:<password>@<cluster>/<database>?retryWrites=true&w=majority';
+          const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+          client.connect((err, client) => {
+            if (err) {
+              console.log('Connection to MongoDB failed');
+              console.error(err);
+              const status = `${new Date().toISOString()}, failure, ${client.serverConfig.s.pool.size}`;
+              require('fs').appendFileSync('public/status/Database_report.log', status);
+              process.exit(1);
+            } else {
+              console.log('Connection to MongoDB successful');
+              const status = `${new Date().toISOString()}, success, ${client.serverConfig.s.pool.size}`;
+              require('fs').appendFileSync('public/status/Database_report.log', status);
+              client.close();
+            }
+          });
+      
+      - name: Ping Google
+        run: |
+          if ping -c 1 www.google.com &> /dev/null
+          then
+            echo 'Google is up'
+            const status = `${new Date().toISOString()}, success, 0.0000`;
+            require('fs').appendFileSync('public/status/Google_report.log', status);
+          else
+            echo 'Google is down'
+            const status = `${new Date().toISOString()}, failure ,0.000`;
+            require('fs').appendFileSync('public/status/Google_report.log', status);
+            process.exit(1);
+          fi
+      
+      - name: Commit changes
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: "Update cluster status report"
+          commit_options: "--no-verify"
+          branch: "main"
+          directory: "public/status/"
+          file_pattern: "*.log"
