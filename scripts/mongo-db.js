@@ -94,3 +94,31 @@ clusterReq.on('error', error => {
 });
 
 clusterReq.end();
+
+// rox docs ping
+start = Date.now();
+
+DocsReq = https.request({
+    hostname: 'docs.rox.games',
+    port: 443,
+    path: '/',
+    method: 'GET',
+    rejectUnauthorized: false
+}, res => {
+    const end = Date.now();
+    const diff = (end - start) / 1000;
+    const status = `${new Date().toISOString()}, success, ${diff.toFixed(4)}`;
+    console.log('Docs Pages is up');
+    fs.appendFileSync('public/status/Docs Pages_report.log', `${status}\n`);
+});
+
+DocsReq.on('error', error => {
+    const end = Date.now();
+    const diff = (end - start) / 1000;
+    const status = `${new Date().toISOString()}, failure, ${diff.toFixed(4)}`;
+    console.log('Docs Pages is down', error);
+    fs.appendFileSync('public/status/Docs Pages_report.log', `${status}\n`);
+
+});
+
+DocsReq.end();
