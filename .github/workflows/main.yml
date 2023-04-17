@@ -14,7 +14,7 @@ jobs:
       - name: Connect to MongoDB
         run: |
           const { MongoClient } = require('mongodb');
-          const uri = 'mongodb+srv://<username>:<password>@<cluster>/<database>?retryWrites=true&w=majority';
+          const uri = 'mongodb+srv://rox-user-1:59sJ9XGzaNKgTvxK@cluster0.bjskb.mongodb.net/Rox-Database?retryWrites=true&w=majority';
           const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
           client.connect((err, client) => {
             if (err) {
