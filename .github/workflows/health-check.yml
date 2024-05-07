@@ -19,8 +19,6 @@ jobs:
       - name: Handle .env file 
         run: echo "${{ secrets.MONGO_URL }}" > .env
 
-      - name: cat file 
-        run: ls -a 
         
       - name: Connect to MongoDB
         run: node ./scripts/mongo-db.js
