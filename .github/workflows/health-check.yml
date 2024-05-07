@@ -7,7 +7,6 @@ on:
 
 jobs:
   health_check_job:
-    runs-on: self-hosted
     name: Check all sites
     steps:
       - name: checkout code
