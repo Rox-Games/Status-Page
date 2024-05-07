@@ -1,6 +1,8 @@
+const dotenv = require("dotenv");
+dotenv.config();
 const { MongoClient } = require('mongodb');
 
-const uri = 'mongodb+srv://rox-user-1:59sJ9XGzaNKgTvxK@cluster0.bjskb.mongodb.net/Rox-Database?retryWrites=true&w=majority';
+const uri = process.env.MONGO_URL;
 
 let start = Date.now();
 
